@@ -10,11 +10,14 @@
 
 import { useState } from 'react'
 import PetForm from '../shared/PetForm'
+import { useNavigate } from 'react-router-dom'
+import { createPet } from '../../api/pet'
 
 const PetCreate = (props) => {
     // pull out our props
     const { user, msgAlert } = props
 
+    const navigate = useNavigate()
     // build our state object
     const [pet, setPet] = useState({
         name: '',
@@ -57,12 +60,34 @@ const PetCreate = (props) => {
             }
         })
     }
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+
+        createPet(user, pet)
+            .then(res => { navigate(`/pets/${res.data.pet.id}`)})
+            .then(() => {
+                msgAlert({
+                    heading: 'Oh Yeah!',
+                    message: 'Created the pet!',
+                    variant: 'success'
+                })
+            })
+            .catch(err => {
+                msgAlert({
+                    heading: 'Oh no!',
+                    message: 'Something went wrong',
+                    variant: 'danger'
+                })
+            })
+    }
+
     console.log('the pet inside create', pet)
     return (
         <PetForm
             pet={pet}
             handleChange={onChange}
-            handleSubmit={() => {console.log('handles submit')}}
+            handleSubmit={onSubmit}
             heading="Add a new pet!"
         />
     )
