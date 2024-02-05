@@ -34,7 +34,21 @@ const PetsIndex = (props) => {
 				console.log('use Effect hook ran')
 				setPets(res.data.pets)
 			})
-			.catch(error => console.error)
+            .then(() => {
+                msgAlert({
+                    heading: 'Success!',
+                    message: 'Got all the pets!',
+                    variant: 'success'
+                })
+            })
+			.catch(error => {
+                msgAlert({
+                    heading: 'Oh no!',
+                    message: 'something went wrong!',
+                    variant: 'danger'
+                })
+                setError(true)
+            })
 	}, [])
 
 	// WE NEVER EVER DO THIS:
