@@ -1,9 +1,7 @@
-import {useState, useEffect} from 'react'
-import { getAllPets } from "../api/pet"
 import PetsIndex from './pets/PetsIndex'
 
 const Home = (props) => {
-	const { msgAlert, user } = props
+	const { msgAlert } = props
 	// console.log('props in home', props)
 
 	// const [pets, setPets] = useState(null)
