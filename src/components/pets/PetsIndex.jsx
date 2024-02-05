@@ -57,7 +57,7 @@ const PetsIndex = (props) => {
 	// 	.catch(err => console.log(err))
 	// API calls need to happen in an effect hook, or as the result of a singular action
 	// (like a form submission)
-	console.log('the pets in PetsIndex: \n', pets)
+	// console.log('the pets in PetsIndex: \n', pets)
 
     // we need to handle multiple states of our data
     // what if we have an error?
