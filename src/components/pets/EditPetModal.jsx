@@ -15,6 +15,14 @@ const EditPetModal = (props) => {
     // by using the original pet as our initial state for a NEW piece of state, specific to this component (called pet), we'll be able to modify the pet we are updating without affecting the original state in the parent component
     const [pet, setPet] = useState(props.pet)
 
+    const onChange = (e) => {
+        e.persist()
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+    }
+
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton />
