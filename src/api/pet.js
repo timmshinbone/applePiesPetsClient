@@ -27,6 +27,8 @@ export const createPet = (user, newPet) => {
 }
 
 // UPDATE -> Adjust a pet
+
+
 // DELETE -> Set a pet free
 export const removePet = (user, id) => {
     return axios({
