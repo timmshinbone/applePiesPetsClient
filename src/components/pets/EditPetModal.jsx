@@ -17,6 +17,25 @@ const EditPetModal = (props) => {
 
     const onChange = (e) => {
         e.persist()
+
+        setPet(prevPet => {
+            const updatedName = e.target.name
+            let updatedValue = e.target.value
+
+            if (e.target.type === 'number') {
+                updatedValue = parseInt(e.target.value)
+            }
+
+            if (updatedName === 'adoptable' && e.target.checked) {
+                updatedValue = true
+            } else if (updatedName === 'adoptable' && !e.target.checked) {
+                updatedValue = false
+            }
+            const updatedPet = { [updatedName] : updatedValue }
+            return {
+                ...prevPet, ...updatedPet
+            }
+        })
     }
 
     const onSubmit = (e) => {

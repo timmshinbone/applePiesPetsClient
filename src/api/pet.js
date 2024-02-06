@@ -27,7 +27,7 @@ export const createPet = (user, newPet) => {
 }
 
 // UPDATE -> Adjust a pet
-
+export const updatePet = () => { console.log('pet update')}
 
 // DELETE -> Set a pet free
 export const removePet = (user, id) => {
