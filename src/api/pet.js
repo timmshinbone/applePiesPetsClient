@@ -13,6 +13,8 @@ export const getOnePet = (id) => {
 }
 
 // CREATE -> Add a pet
+// API calls with axios that are not a simple GET, require a config object
+// that config object needs a url, method, and any auth headers if necessary
 export const createPet = (user, newPet) => {
     return axios({
         url: `${apiUrl}/pets`,
@@ -26,3 +28,12 @@ export const createPet = (user, newPet) => {
 
 // UPDATE -> Adjust a pet
 // DELETE -> Set a pet free
+export const removePet = (user, id) => {
+    return axios({
+        url: `${apiUrl}/pets/${id}`,
+        method: 'DELETE',
+        headers: {
+            Authorization: `Token token=${user.token}`
+        }
+    })
+}

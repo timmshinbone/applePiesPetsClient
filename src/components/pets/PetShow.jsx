@@ -6,15 +6,18 @@
 // this will be rendered by it's own route -> pets/<id>
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { getOnePet } from '../../api/pet'
+import { getOnePet, removePet } from '../../api/pet'
 import LoadingScreen from '../shared/LoadingScreen'
-import { Container, Card } from 'react-bootstrap'
+import { Container, Card, Button } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 
 const PetShow = (props) => {
     const { petId } = useParams()
     const { user, msgAlert } = props
 
     const [pet, setPet] = useState(null)
+    // this gives us a function we can use to navigate via react-router
+    const navigate = useNavigate()
 
     useEffect(() => {
         getOnePet(petId)
@@ -34,7 +37,32 @@ const PetShow = (props) => {
                 })
             })
     }, [])
-    console.log('the pet in showPet', pet)
+    
+    // this is an api call function, which means we'll need to handle the promise chain.
+    // this means sending appropriate messages, as well as navigating upon success
+    const setPetFree = () => {
+        // we want to remove the pet
+        removePet(user, pet._id)
+            // display a success message
+            .then(() => {
+                msgAlert({
+                    heading: 'Oh Yeah!',
+                    message: 'We set the pet free!',
+                    variant: 'success'
+                })
+            })
+            // navigate the user back to the index page(Home)(/)
+            .then(() => navigate('/'))
+            // if an error occurs, tell the user
+            .catch(err => {
+                msgAlert({
+                    heading: 'Oh no!',
+                    message: 'Something went wrong',
+                    variant: 'danger'
+                })
+            })
+    }
+
     // if we don't have a pet, show the loading screen
     if (!pet) {
         return <LoadingScreen />
@@ -57,6 +85,25 @@ const PetShow = (props) => {
                         </Card.Text>
                     </Card.Body>
                     <Card.Footer>
+                        {
+                            pet.owner && user && pet.owner._id === user._id
+                            ?
+                            <>
+                                <Button>
+                                    Edit Pet
+                                </Button>
+                                <Button
+                                    className='m-2'
+                                    variant='danger'
+                                    onClick={() => setPetFree()}
+                                >
+                                    Set Pet Free
+                                </Button>
+                            </>
+                            :
+                            null
+                        }
+                        <br/>
                         {
                             pet.owner ? `owner: ${pet.owner.email}` : null
                         }
