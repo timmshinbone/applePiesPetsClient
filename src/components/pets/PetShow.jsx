@@ -12,6 +12,14 @@ import { Container, Card, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import messages from '../shared/AutoDismissAlert/messages'
 import EditPetModal from './EditPetModal'
+import ToyShow from '../toys/ToyShow'
+
+// sets a style object for our toy card container
+const toyCardContainerLayout = {
+    display: 'flex',
+    justifyContent: 'center',
+    flexFlow: 'row wrap'
+}
 
 const PetShow = (props) => {
     const { petId } = useParams()
@@ -64,6 +72,22 @@ const PetShow = (props) => {
             })
     }
 
+    // this is going to map over the pet's toys array, and produce cards for every toy
+    let toyCards
+    // if we have a pet, and if their toys array length > 0, make cards, otherwise dont
+    if (pet) {
+        if (pet.toys.length > 0) {
+            toyCards = pet.toys.map(toy => (
+                <ToyShow 
+                    key={toy.id}
+                    toy={toy}
+                />
+            ))
+        } else {
+            toyCards = <p>Pet has no toys, ain't that sad?</p>
+        }
+    }
+
     // if we don't have a pet, show the loading screen
     if (!pet) {
         return <LoadingScreen />
@@ -114,6 +138,9 @@ const PetShow = (props) => {
                         }
                     </Card.Footer>
                 </Card>
+            </Container>
+            <Container className='m-2' style={toyCardContainerLayout}>
+                {toyCards}
             </Container>
             <EditPetModal 
                 user={user}
