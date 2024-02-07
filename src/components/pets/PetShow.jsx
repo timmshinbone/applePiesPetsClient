@@ -83,6 +83,10 @@ const PetShow = (props) => {
                 <ToyShow 
                     key={toy.id}
                     toy={toy}
+                    pet={pet}
+                    user={user}
+                    msgAlert={msgAlert}
+                    triggerRefresh={() => setUpdated(prev => !prev)}
                 />
             ))
         } else {
