@@ -102,7 +102,7 @@ const PetShow = (props) => {
     return (
         <>
             <Container className='m-2'>
-                <Card>
+                <Card key={pet._id}>
                     <Card.Header>
                         { pet.fullTitle }
                     </Card.Header>
